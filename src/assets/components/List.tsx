@@ -1,35 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AddForm from './AddForm';
-
-interface Entry {
-  name: string;
-  jerseyNumber: string;
-}
+import useFetchList from '../../Hooks/useFetchList';
 
 const List: React.FC = () => {
-  const [entries, setEntries] = useState<Entry[]>([]);
+  const { entries, setEntries } = useFetchList();
   const [name, setName] = useState<string>('');
   const [jerseyNumber, setJerseyNumber] = useState<string>('');
 
-  useEffect(() => {
-    // Fetch data from local storage when the component mounts
-    const storedEntries = JSON.parse(localStorage.getItem('jerseyList') || '[]') as Entry[];
-    setEntries(storedEntries);
-  }, []);
-
   const handleAddEntry = () => {
-    const newEntry: Entry = { name, jerseyNumber };
+    // Check if jerseyNumber is already taken
+    if (entries.some(entry => entry.jerseyNumber === jerseyNumber)) {
+      alert(`pag sure uy naa nay nakauna sa ${jerseyNumber}. pag pili lain.`);
+      return;
+    }
+  
+    // Proceed to add the entry
+    const newEntry = { name, jerseyNumber };
     const updatedEntries = [...entries, newEntry];
-
+  
     // Save to local storage
     localStorage.setItem('jerseyList', JSON.stringify(updatedEntries));
-
+  
     // Update state
     setEntries(updatedEntries);
     setName('');
     setJerseyNumber('');
   };
-
+  
   return (
     <div className="flex flex-col items-center h-screen">
       <AddForm

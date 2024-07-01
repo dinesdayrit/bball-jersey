@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+
 interface AddFormProps {
   name: string;
   jerseyNumber: string;
@@ -15,6 +17,7 @@ const AddForm: React.FC<AddFormProps> = ({
   setJerseyNumber,
   handleAddEntry,
 }) => {
+
   const isFormValid = () => {
     return name.trim() !== '' && jerseyNumber.trim() !== '';
   };
