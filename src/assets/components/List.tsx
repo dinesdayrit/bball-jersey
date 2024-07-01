@@ -6,11 +6,12 @@ const List: React.FC = () => {
   const { entries, setEntries } = useFetchList();
   const [name, setName] = useState<string>('');
   const [jerseyNumber, setJerseyNumber] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleAddEntry = () => {
     // Check if jerseyNumber is already taken
     if (entries.some(entry => entry.jerseyNumber === jerseyNumber)) {
-      alert(`pag sure uy naa nay nakauna sa ${jerseyNumber}. pag pili lain.`);
+      setErrorMessage(`pag sure uy nakuna na ang ${jerseyNumber}. pag pili ug lain.`);
       return;
     }
   
@@ -25,6 +26,7 @@ const List: React.FC = () => {
     setEntries(updatedEntries);
     setName('');
     setJerseyNumber('');
+    setErrorMessage('');
   };
   
   return (
@@ -35,6 +37,7 @@ const List: React.FC = () => {
         setName={setName}
         setJerseyNumber={setJerseyNumber}
         handleAddEntry={handleAddEntry}
+        errorMessage={errorMessage}
       />
       <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg mt-4">
         <h2 className="text-2xl font-bold mb-4">Jersey List</h2>

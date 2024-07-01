@@ -1,13 +1,12 @@
 import React from 'react';
 
-
-
 interface AddFormProps {
   name: string;
   jerseyNumber: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   setJerseyNumber: React.Dispatch<React.SetStateAction<string>>;
   handleAddEntry: () => void;
+  errorMessage: string;
 }
 
 const AddForm: React.FC<AddFormProps> = ({
@@ -16,52 +15,46 @@ const AddForm: React.FC<AddFormProps> = ({
   setName,
   setJerseyNumber,
   handleAddEntry,
+  errorMessage,
 }) => {
-
-  const isFormValid = () => {
-    return name.trim() !== '' && jerseyNumber.trim() !== '';
-  };
-
   return (
-    <div className="flex flex-row gap-2 mb-4">
-      <div className="flex flex-col justify-center">
+    <div className="w-full max-w-md">
+      <h2 className="text-2xl font-bold mb-4">Add New Entry</h2>
+      {errorMessage && <p className="text-red-500 text-sm mb-4">{errorMessage}</p>}
+      <div className="flex gap-4 items-center">
+      <div className="mb-4">
         <label htmlFor="name" className="block text-gray-100 font-bold mb-2">
-          Name:
+          Name
         </label>
         <input
           type="text"
           id="name"
-          name="name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          onChange={e => setName(e.target.value)}
+          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
         />
       </div>
-      <div className="flex flex-col justify-center">
+      <div className="mb-4">
         <label htmlFor="jerseyNumber" className="block text-gray-100 font-bold mb-2">
-          J-no:
+          J-No.
         </label>
         <input
-          type="number"
+          type="text"
           id="jerseyNumber"
-          name="jerseyNumber"
           value={jerseyNumber}
-          onChange={(e) => setJerseyNumber(e.target.value)}
-          className="w-20 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+          onChange={e => setJerseyNumber(e.target.value)}
+          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
         />
       </div>
-      <div className="flex items-end">
-        <button
-          type="button"
-          onClick={handleAddEntry}
-          disabled={!isFormValid()} // Disable button if form is not valid
-          className={`bg-green-600 text-white px-4 py-2 rounded-lg ${
-            !isFormValid() ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          ADD
-        </button>
       </div>
+
+     <button
+        onClick={handleAddEntry}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Add Entry
+      </button>
+  
     </div>
   );
 };
