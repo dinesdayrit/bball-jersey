@@ -15,10 +15,14 @@ const AddForm: React.FC<AddFormProps> = ({
   setJerseyNumber,
   handleAddEntry,
 }) => {
+  const isFormValid = () => {
+    return name.trim() !== '' && jerseyNumber.trim() !== '';
+  };
+
   return (
     <div className="flex flex-row gap-2 mb-4">
       <div className="flex flex-col justify-center">
-        <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
+        <label htmlFor="name" className="block text-gray-100 font-bold mb-2">
           Name:
         </label>
         <input
@@ -31,8 +35,8 @@ const AddForm: React.FC<AddFormProps> = ({
         />
       </div>
       <div className="flex flex-col justify-center">
-        <label htmlFor="jerseyNumber" className="block text-gray-700 font-bold mb-2">
-          Jersey Number:
+        <label htmlFor="jerseyNumber" className="block text-gray-100 font-bold mb-2">
+          J-no:
         </label>
         <input
           type="number"
@@ -47,7 +51,10 @@ const AddForm: React.FC<AddFormProps> = ({
         <button
           type="button"
           onClick={handleAddEntry}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg"
+          disabled={!isFormValid()} // Disable button if form is not valid
+          className={`bg-green-600 text-white px-4 py-2 rounded-lg ${
+            !isFormValid() ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         >
           ADD
         </button>
